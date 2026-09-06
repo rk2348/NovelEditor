@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>ノベルゲーム</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="game-root">
+
+    <!-- タイトル画面 -->
+    <section id="screen-title" class="screen">
+      <div class="title-inner">
+        <h1 id="game-title">タイトル</h1>
+        <p id="game-author"></p>
+        <div class="menu-buttons">
+          <button id="btn-newgame">はじめから</button>
+          <button id="btn-continue">つづきから</button>
+          <button id="btn-loadgame">ロード</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ゲーム画面 -->
+    <section id="screen-game" class="screen hidden">
+      <div id="bg-layer"><img id="bg-image" alt="" /></div>
+      <div id="char-layer">
+        <img class="char-img" data-pos="left" alt="" />
+        <img class="char-img" data-pos="center" alt="" />
+        <img class="char-img" data-pos="right" alt="" />
+      </div>
+
+      <div id="choice-layer" class="hidden"></div>
+
+      <div id="textbox-area">
+        <div id="advance-indicator">▼</div>
+        <div id="speaker-name"></div>
+        <div id="text-body"></div>
+      </div>
+
+      <div id="game-menu-bar">
+        <button id="btn-save" class="small">セーブ</button>
+        <button id="btn-load" class="small">ロード</button>
+        <button id="btn-title" class="small">タイトルへ</button>
+      </div>
+    </section>
+
+    <!-- エンディング画面 -->
+    <section id="screen-ending" class="screen hidden">
+      <div class="title-inner">
+        <h2>END</h2>
+        <button id="btn-ending-title">タイトルへ戻る</button>
+      </div>
+    </section>
+
+    <!-- セーブ/ロード オーバーレイ -->
+    <div id="saveload-overlay" class="hidden">
+      <div class="saveload-panel">
+        <div class="saveload-header">
+          <span id="saveload-title-text">セーブ</span>
+          <button id="btn-saveload-close" class="small">✕ 閉じる</button>
+        </div>
+        <div id="save-slot-grid"></div>
+      </div>
+    </div>
+
+    <audio id="bgm-audio" loop preload="auto"></audio>
+    <audio id="voice-audio" preload="auto"></audio>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/engine.js"></script>
+</body>
+</html>

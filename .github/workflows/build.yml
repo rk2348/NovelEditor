@@ -1,0 +1,52 @@
+name: Build and Release (Windows)
+
+# タグ(例: v1.0.0)をpushすると、Windows向けの実行ファイル(インストーラー版 .exe と
+# インストール不要のポータブル版 .exe)を自動ビルドし、GitHubのReleasesページに
+# 添付します。手動実行(Actionsタブから "Run workflow")でビルドだけ試すことも可能です。
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Node.jsをセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: 依存パッケージをインストール
+        run: npm ci
+
+      - name: ランタイム(engine.js)の自動テストを実行
+        run: npm run test:engine
+
+      - name: Windows向けにビルド(タグpush時のみGitHub Releasesへ公開)
+        run: npm run release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ビルドのみ(手動実行時。Releasesへは公開しない)
+        run: npm run dist
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+      - name: ビルド成果物をアーティファクトとして保存
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: |
+            dist/*.exe
+          if-no-files-found: warn

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: file:;" />
+<title>ノベルゲームエディタ</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="toolbar">
+      <div class="tb-group">
+        <span class="app-title">ノベルゲームエディタ</span>
+      </div>
+      <div class="tb-group">
+        <button id="btn-new">新規作成</button>
+        <button id="btn-open">開く</button>
+        <button id="btn-save">保存</button>
+        <span id="dirty-indicator" class="dirty-indicator"></span>
+      </div>
+      <div class="tb-group">
+        <button id="btn-preview" class="accent">▶ テストプレイ</button>
+        <button id="btn-export" class="accent">⇩ 出力(エクスポート)</button>
+      </div>
+    </header>
+
+    <div id="welcome" class="welcome hidden">
+      <div class="welcome-card">
+        <h1>ノベルゲームエディタへようこそ</h1>
+        <p>テキスト・選択肢分岐・立ち絵/背景・BGM/SE/ボイス・変数管理に対応したノベルゲームを作成できます。</p>
+        <div class="welcome-actions">
+          <button id="welcome-new" class="accent">新しいプロジェクトを作成</button>
+          <button id="welcome-open">既存のプロジェクトを開く</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="main-layout" class="hidden">
+      <aside id="scene-panel">
+        <div class="panel-header">
+          <span>シーン一覧</span>
+          <button id="btn-add-scene" title="シーンを追加">＋</button>
+        </div>
+        <ul id="scene-list"></ul>
+      </aside>
+
+      <main id="scene-editor">
+        <div class="panel-header">
+          <input id="scene-name-input" type="text" placeholder="シーン名" />
+          <span id="scene-id-label" class="muted"></span>
+          <button id="btn-delete-scene" class="danger" title="このシーンを削除">シーン削除</button>
+        </div>
+        <div id="command-list"></div>
+        <div class="add-command-row">
+          <select id="add-command-type"></select>
+          <button id="btn-add-command">＋ コマンドを追加</button>
+        </div>
+      </main>
+
+      <aside id="side-panel">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="assets">素材</button>
+          <button class="tab-btn" data-tab="characters">キャラクター</button>
+          <button class="tab-btn" data-tab="variables">変数/フラグ</button>
+          <button class="tab-btn" data-tab="meta">作品情報</button>
+        </div>
+        <div id="tab-assets" class="tab-content active"></div>
+        <div id="tab-characters" class="tab-content"></div>
+        <div id="tab-variables" class="tab-content"></div>
+        <div id="tab-meta" class="tab-content"></div>
+      </aside>
+    </div>
+
+    <footer id="statusbar">
+      <span id="status-text">プロジェクトが開かれていません</span>
+    </footer>
+
+    <div id="prompt-overlay" class="hidden">
+      <div class="prompt-panel">
+        <div id="prompt-message" class="prompt-message"></div>
+        <input type="text" id="prompt-input" />
+        <div class="prompt-actions">
+          <button id="prompt-cancel">キャンセル</button>
+          <button id="prompt-ok" class="accent">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/schema.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
